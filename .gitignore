@@ -1,0 +1,23 @@
+# Node
+node_modules/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Railway
+.railway/
