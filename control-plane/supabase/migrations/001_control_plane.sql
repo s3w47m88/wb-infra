@@ -130,13 +130,7 @@ CREATE POLICY "Organization creators can delete their organizations"
 DROP POLICY IF EXISTS "Users can view members of their organizations" ON organization_members;
 CREATE POLICY "Users can view members of their organizations"
   ON organization_members FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM organization_members om
-      WHERE om.organization_id = organization_members.organization_id
-      AND om.user_id = auth.uid()
-    )
-  );
+  USING (user_id = auth.uid());
 
 DROP POLICY IF EXISTS "Organization creators can add members" ON organization_members;
 CREATE POLICY "Organization creators can add members"
