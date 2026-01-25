@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
 CREATE TABLE IF NOT EXISTS organizations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
+  slug TEXT,
   company_email TEXT,
   company_phone TEXT,
   created_by UUID REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -23,6 +24,7 @@ CREATE TABLE IF NOT EXISTS organizations (
 );
 
 ALTER TABLE organizations
+  ADD COLUMN IF NOT EXISTS slug TEXT,
   ADD COLUMN IF NOT EXISTS company_email TEXT,
   ADD COLUMN IF NOT EXISTS company_phone TEXT,
   ADD COLUMN IF NOT EXISTS created_by UUID REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -51,6 +53,7 @@ CREATE TABLE IF NOT EXISTS organization_invitations (
 
 CREATE INDEX IF NOT EXISTS idx_user_profiles_id ON user_profiles(id);
 CREATE INDEX IF NOT EXISTS idx_organizations_created_by ON organizations(created_by);
+CREATE INDEX IF NOT EXISTS idx_organizations_slug ON organizations(slug);
 CREATE INDEX IF NOT EXISTS idx_organization_members_org ON organization_members(organization_id);
 CREATE INDEX IF NOT EXISTS idx_organization_members_user ON organization_members(user_id);
 CREATE INDEX IF NOT EXISTS idx_organization_invitations_token ON organization_invitations(invite_token);
